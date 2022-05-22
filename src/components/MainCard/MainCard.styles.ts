@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const StyledCard = styled(Paper)`
   width: 400px;
-  height: 300px;
+  min-height: 400px;
 
   padding: 2rem;
 `;
