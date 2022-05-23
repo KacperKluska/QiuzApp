@@ -3,9 +3,15 @@ import styled from "styled-components";
 export const StyledWelcome = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 2rem;
 
-  height: 100%;
+  height: 300px;
+`;
+
+export const StyledDescription = styled.div`
+  text-align: center;
+  line-height: 1.2rem;
 `;
 
 export const StyledTitle = styled.span`
