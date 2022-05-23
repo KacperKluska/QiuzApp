@@ -20,8 +20,10 @@ export const WelcomeScreen = ({ toggleGameOnStatus }: Props) => {
           QUIZ GAME
         </StyledTitle>
         <StyledDescription>
-          You will get 5 questions where only 1 answer is correct. Click "Play"
-          button to start the Quiz. Good luck and have fun!
+          You will get 5 questions where is only 1 correct answer. Click "Play"
+          button to start the Quiz.
+          <br />
+          Good luck and have fun!
         </StyledDescription>
         <Button type="button" onClick={toggleGameOnStatus}>
           Play
