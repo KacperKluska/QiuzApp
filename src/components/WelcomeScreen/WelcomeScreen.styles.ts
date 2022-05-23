@@ -7,15 +7,15 @@ export const StyledWelcome = styled.div`
   gap: 2rem;
 
   height: 400px;
+
+  text-align: center;
 `;
 
 export const StyledDescription = styled.div`
-  text-align: center;
   line-height: 1.2rem;
 `;
 
 export const StyledTitle = styled.span`
   font-size: 2rem;
   font-weight: bold;
-  text-align: center;
 `;
