@@ -21,6 +21,16 @@ export const QuestionStepper = ({ questions, toggleGameOnStatus }: Props) => {
   const [userAnswers, setUserAnswers] = useState(initialUserAnswers);
   const [canFinish, setCanFinish] = useState(false);
   const [gameFinished, setGameFinished] = useState(false);
+  const [answers] = useState(
+    questions?.map((question) =>
+      concatAnswers(question.incorrect_answers, question.correct_answer)
+    )
+  );
+
+  useEffect(() => {
+    const result = isEveryAnswerChecked(userAnswers);
+    if (result) setCanFinish(true);
+  }, [userAnswers]);
 
   const toggleGameFinishedStatus = () => {
     setGameFinished((prev) => !prev);
@@ -34,11 +44,6 @@ export const QuestionStepper = ({ questions, toggleGameOnStatus }: Props) => {
     setGameFinished(false);
   };
 
-  useEffect(() => {
-    const result = isEveryAnswerChecked(userAnswers);
-    if (result) setCanFinish(true);
-  }, [userAnswers]);
-
   const handleSetUserAnswer = (index: number, answer: string) => {
     setUserAnswers((prev) => {
       const temp = [...prev];
@@ -46,12 +51,6 @@ export const QuestionStepper = ({ questions, toggleGameOnStatus }: Props) => {
       return temp;
     });
   };
-
-  const [answers] = useState(
-    questions?.map((question) =>
-      concatAnswers(question.incorrect_answers, question.correct_answer)
-    )
-  );
 
   const handleNextQuestion = () => {
     setActiveStep((prev) => prev + 1);
