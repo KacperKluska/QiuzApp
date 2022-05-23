@@ -3,10 +3,10 @@ import { MainCard } from "../MainCard/MainCard.component";
 import { StyledTitle, StyledWelcome } from "./WelcomeScreen.styles";
 
 interface Props {
-  toggleGameStatus: () => void;
+  toggleGameOnStatus: () => void;
 }
 
-export const WelcomeScreen = ({ toggleGameStatus }: Props) => {
+export const WelcomeScreen = ({ toggleGameOnStatus }: Props) => {
   return (
     <MainCard>
       <StyledWelcome>
@@ -19,7 +19,7 @@ export const WelcomeScreen = ({ toggleGameStatus }: Props) => {
           You will get 5 questions where only 1 answer is correct. Click "Play"
           button to start the Quiz. Good luck and have fun!
         </div>
-        <Button type="button" onClick={toggleGameStatus}>
+        <Button type="button" onClick={toggleGameOnStatus}>
           Play
         </Button>
       </StyledWelcome>

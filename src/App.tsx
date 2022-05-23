@@ -24,7 +24,7 @@ function App() {
     null
   );
 
-  const toggleGameStatus = () => {
+  const toggleGameOnStatus = () => {
     setGameOn((prev) => !prev);
   };
 
@@ -38,11 +38,11 @@ function App() {
 
   useEffect(() => {
     try {
-      getQuestion();
+      if (!gameOn) getQuestion();
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  }, [gameOn]);
 
   if (error)
     return (
@@ -54,9 +54,12 @@ function App() {
   return (
     <Layout>
       {!gameOn ? (
-        <WelcomeScreen toggleGameStatus={toggleGameStatus} />
+        <WelcomeScreen toggleGameOnStatus={toggleGameOnStatus} />
       ) : (
-        <QuestionStepper questions={questions} />
+        <QuestionStepper
+          questions={questions}
+          toggleGameOnStatus={toggleGameOnStatus}
+        />
       )}
     </Layout>
   );

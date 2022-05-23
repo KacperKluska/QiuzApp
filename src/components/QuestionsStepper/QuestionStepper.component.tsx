@@ -1,31 +1,57 @@
-import { Button, MobileStepper, useTheme } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MainCard } from "../MainCard/MainCard.component";
 import { Question } from "../Question/Question.component";
 import { QuestionDataResponse } from "../Question/Question.interface";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import { StyledStepper } from "./QuestionStepper.styles";
 import { concatAnswers } from "../Question/Question.utils";
+import { ProgressStepper } from "../ProgressStepper/ProgressStepper.component";
+import { checkResult, isEveryAnswerChecked } from "./QuestionStepper.utils";
+import { FinishScreen } from "../FinishScreen/FinishScreen.component";
+import { Button } from "@mui/material";
 
 interface Props {
   questions: QuestionDataResponse[] | null;
+  toggleGameOnStatus: () => void;
 }
 
-export const QuestionStepper = ({ questions }: Props) => {
+const initialUserAnswers = ["", "", "", "", ""];
+
+export const QuestionStepper = ({ questions, toggleGameOnStatus }: Props) => {
   const [activeStep, setActiveStep] = useState(0);
-  const [questionsItems] = useState(
-    questions?.map((question) => (
-      <Question
-        {...question}
-        answers={concatAnswers(
-          question.incorrect_answers,
-          question.correct_answer
-        )}
-      />
-    ))
+  const [userAnswers, setUserAnswers] = useState(initialUserAnswers);
+  const [canFinish, setCanFinish] = useState(false);
+  const [gameFinished, setGameFinished] = useState(false);
+
+  const toggleGameFinishedStatus = () => {
+    setGameFinished((prev) => !prev);
+  };
+
+  const playAgain = () => {
+    setCanFinish(false);
+    setActiveStep(0);
+    setUserAnswers(initialUserAnswers);
+    toggleGameOnStatus();
+    setGameFinished(false);
+  };
+
+  useEffect(() => {
+    const result = isEveryAnswerChecked(userAnswers);
+    if (result) setCanFinish(true);
+  }, [userAnswers]);
+
+  const handleSetUserAnswer = (index: number, answer: string) => {
+    setUserAnswers((prev) => {
+      const temp = [...prev];
+      temp[index] = answer;
+      return temp;
+    });
+  };
+
+  const [answers] = useState(
+    questions?.map((question) =>
+      concatAnswers(question.incorrect_answers, question.correct_answer)
+    )
   );
-  const theme = useTheme();
 
   const handleNextQuestion = () => {
     setActiveStep((prev) => prev + 1);
@@ -35,49 +61,35 @@ export const QuestionStepper = ({ questions }: Props) => {
     setActiveStep((prev) => prev - 1);
   };
 
-  if (!questions || !questionsItems) return null;
+  if (!questions || !answers) return null;
 
-  // TODO move MobileStepper to his own component
   return (
     <MainCard>
-      <StyledStepper>
-        <div>{questionsItems[activeStep]}</div>
-        <MobileStepper
-          variant="progress"
-          steps={questions.length}
-          position="static"
-          activeStep={activeStep}
-          sx={{ maxWidth: 400, flexGrow: 0 }}
-          nextButton={
-            <Button
-              size="small"
-              onClick={handleNextQuestion}
-              disabled={activeStep === questions.length - 1}
-            >
-              Next
-              {theme.direction === "rtl" ? (
-                <KeyboardArrowLeft />
-              ) : (
-                <KeyboardArrowRight />
-              )}
-            </Button>
-          }
-          backButton={
-            <Button
-              size="small"
-              onClick={handlePrevQuestion}
-              disabled={activeStep === 0}
-            >
-              {theme.direction === "rtl" ? (
-                <KeyboardArrowRight />
-              ) : (
-                <KeyboardArrowLeft />
-              )}
-              Back
-            </Button>
-          }
+      {!gameFinished ? (
+        <StyledStepper>
+          <Question
+            {...questions[activeStep]}
+            answers={answers[activeStep]}
+            userAnswers={userAnswers}
+            handleSetUserAnswer={handleSetUserAnswer}
+            index={activeStep}
+          />
+          <ProgressStepper
+            size={questions.length}
+            activeStep={activeStep}
+            handleNextQuestion={handleNextQuestion}
+            handlePrevQuestion={handlePrevQuestion}
+          />
+          <Button onClick={toggleGameFinishedStatus} disabled={!canFinish}>
+            Finish the game!
+          </Button>
+        </StyledStepper>
+      ) : (
+        <FinishScreen
+          playAgain={playAgain}
+          result={checkResult(userAnswers, questions)}
         />
-      </StyledStepper>
+      )}
     </MainCard>
   );
 };
