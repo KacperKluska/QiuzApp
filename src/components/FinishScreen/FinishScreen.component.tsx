@@ -1,5 +1,11 @@
 import { Button } from "@mui/material";
 import { GameResult } from "../QuestionsStepper/QuestionStepper.utils";
+import {
+  StyledFinishScreen,
+  StyledItem,
+  StyledList,
+  StyledScore,
+} from "./FinishScreen.styles";
 
 interface Props {
   playAgain: () => void;
@@ -9,15 +15,21 @@ interface Props {
 export const FinishScreen = ({ playAgain, result }: Props) => {
   const points = result.filter((item) => item.isCorrect).length;
   return (
-    <div>
-      <div>Your score is {points}/5</div>
-      Your answers:
-      <ul>
-        {result.map((item) => (
-          <li key={item.answer}>{item.answer}</li>
+    <StyledFinishScreen>
+      <StyledScore>
+        You score {points}&nbsp;{points === 1 ? "point" : "points"}
+      </StyledScore>
+      <StyledList>
+        Your answers:
+        {result.map((item, index) => (
+          <StyledItem key={item.answer} isCorrect={item.isCorrect}>
+            {index + 1}&nbsp;{item.answer}
+          </StyledItem>
         ))}
-      </ul>
-      <Button onClick={playAgain}>Play again</Button>
-    </div>
+      </StyledList>
+      <Button onClick={playAgain} fullWidth>
+        Play again
+      </Button>
+    </StyledFinishScreen>
   );
 };
