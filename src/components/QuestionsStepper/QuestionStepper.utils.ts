@@ -1,21 +1,18 @@
 import { QuestionDataResponse } from "../Question/Question.interface";
-
-export interface GameResult {
-  answer: string;
-  isCorrect: boolean;
-}
+import { GameResult } from "./QuestionStepper.interface";
 
 export const isEveryAnswerChecked = (answers: string[]) => {
-  return answers.filter((answer) => answer === "").length === 0;
+  return answers.find((answer) => answer === "") !== "";
 };
 
 export const checkResult = (
   answers: string[],
   questions: QuestionDataResponse[]
 ): GameResult[] => {
-  return answers.map((answer, index) =>
-    answer === questions[index].correct_answer
-      ? { answer, isCorrect: true }
-      : { answer, isCorrect: false }
-  );
+  return answers.map((answer, index) => {
+    return {
+      answer,
+      isCorrect: answer === questions[index].correct_answer ? true : false,
+    };
+  });
 };

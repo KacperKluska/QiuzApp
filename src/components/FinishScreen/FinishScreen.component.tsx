@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { GameResult } from "../QuestionsStepper/QuestionStepper.utils";
+import { GameResult } from "../QuestionsStepper/QuestionStepper.interface";
 import {
   StyledFinishScreen,
   StyledItem,
