@@ -1,3 +1,16 @@
+# Quiz App
+
+This is the Quiz App. You will get 5 questions, try to answer correctly to all of them.
+
+## Run the app
+
+To run the app, follow the steps:
+
+1. Clone the repository to your local directory.
+2. Run from root dir `npm install` and then `npm run start`
+
+The app by default starts on localhost on port 3000.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
