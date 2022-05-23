@@ -2,6 +2,10 @@
 
 This is the Quiz App. You will get 5 questions, try to answer correctly to all of them.
 
+## Prerequisites
+
+You need to have `node` installed on your computer
+
 ## Run the app
 
 To run the app, follow the steps:
