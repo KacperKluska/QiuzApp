@@ -66,24 +66,30 @@ export const QuestionStepper = ({ questions, toggleGameOnStatus }: Props) => {
   return (
     <MainCard>
       {!gameFinished ? (
-        <StyledStepper>
-          <Question
-            {...questions[activeStep]}
-            answers={answers[activeStep]}
-            userAnswers={userAnswers}
-            handleSetUserAnswer={handleSetUserAnswer}
-            index={activeStep}
-          />
-          <ProgressStepper
-            size={questions.length}
-            activeStep={activeStep}
-            handleNextQuestion={handleNextQuestion}
-            handlePrevQuestion={handlePrevQuestion}
-          />
-          <Button onClick={toggleGameFinishedStatus} disabled={!canFinish}>
+        <div>
+          <StyledStepper>
+            <Question
+              {...questions[activeStep]}
+              answers={answers[activeStep]}
+              userAnswers={userAnswers}
+              handleSetUserAnswer={handleSetUserAnswer}
+              index={activeStep}
+            />
+            <ProgressStepper
+              size={questions.length}
+              activeStep={activeStep}
+              handleNextQuestion={handleNextQuestion}
+              handlePrevQuestion={handlePrevQuestion}
+            />
+          </StyledStepper>
+          <Button
+            onClick={toggleGameFinishedStatus}
+            fullWidth
+            disabled={!canFinish}
+          >
             Finish the game!
           </Button>
-        </StyledStepper>
+        </div>
       ) : (
         <FinishScreen
           playAgain={playAgain}

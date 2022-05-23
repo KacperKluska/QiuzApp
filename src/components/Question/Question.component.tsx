@@ -1,12 +1,13 @@
 import { FormControl, Radio, RadioGroup } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { StyledQuestionBody } from "./Question.styles";
+import { StyledQuestion, StyledQuestionBody } from "./Question.styles";
 import { HTMLParser } from "./Question.utils";
 
 const letters = ["a", "b", "c", "d", "e", "f"];
 
 interface Props {
   category: string;
+  difficulty: string;
   question: string;
   answers: string[];
   userAnswers: string[];
@@ -16,6 +17,7 @@ interface Props {
 
 export const Question = ({
   category,
+  difficulty,
   question,
   answers,
   userAnswers,
@@ -29,8 +31,9 @@ export const Question = ({
 
   return (
     <StyledQuestionBody>
-      <span>{HTMLParser(category)}</span>
-      <div>{HTMLParser(question)}</div>
+      <span>Category:&nbsp;{HTMLParser(category)}</span>
+      <span>Difficulty:&nbsp;{HTMLParser(difficulty)}</span>
+      <StyledQuestion>{HTMLParser(question)}</StyledQuestion>
       <FormControl>
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"

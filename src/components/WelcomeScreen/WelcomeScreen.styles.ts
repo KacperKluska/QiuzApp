@@ -6,7 +6,7 @@ export const StyledWelcome = styled.div`
   justify-content: center;
   gap: 2rem;
 
-  height: 300px;
+  height: 400px;
 `;
 
 export const StyledDescription = styled.div`
